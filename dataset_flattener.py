@@ -28,6 +28,10 @@ def flatten(dataset, features):
 				new_patient = dataset[patient_i - 1][:35]
 				new_patient.append(start_date)
 				new_patient.append(duration)
+				changes = 0
+				for key in modality_changes:
+					changes += modality_changes[key]
+				new_patient.append(changes)
 				new_patient = new_patient + dataset[patient_i - 1][36:]
 				new_dataset.append(new_patient)
 			start_date = dataset[patient_i][35]
@@ -68,7 +72,7 @@ def main(dataset_name):
 	dataset, features = load(dataset_path)
 	features_1 = features[:36]
 	features_2 = features[36:]
-	features = features_1 + ['Duration'] + features_2
+	features = features_1 + ['Duration'] + ['Number of Modality Changes'] + features_2
 	dataset = flatten(dataset, features)
 	write(dataset, features, current_path)
 	print(features)
