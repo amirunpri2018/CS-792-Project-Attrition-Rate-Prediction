@@ -46,7 +46,7 @@ def flatten(dataset, features):
             for key in modality_changes:
                 changes += modality_changes[key]
             new_patient.append(changes)
-            new_patient.append(withdrawed)
+            new_patient.append(withdrew)
             new_patient = new_patient + dataset[patient_i - 1][36:]
             new_dataset.append(new_patient)
             start_date = dataset[patient_i][35]

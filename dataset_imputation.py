@@ -12,12 +12,9 @@ def main(dataset_1_name, dataset_2_name):
 	dataset_1 = read_csv(dataset_1_path, header = None)
 	dataset_2 = read_csv(dataset_2_path, header = None)
 	dataset_2[[0, 1, 2, 3, 4, 5, 6]] = dataset_2[[0, 1, 2, 3, 4, 5, 6]].replace('null', numpy.NaN)
-	print(dataset_2.isnull().sum())
 	frequent_reason = getFrequentReason(dataset_2[6])
 	dataset_2[6] = dataset_2[6].replace(numpy.NaN, frequent_reason)
-	dataset_2.to_csv('FinalDatasetWithoutAttributes.csv')
-	print(dataset_2.isnull().sum())
-	# print(dataset_2.describe())
+	dataset_2.to_csv('FinalDatasetWithoutAttributes.csv', index=False)
 
 def getFrequentReason(reason_column):
 	reason_dict = {}
@@ -26,7 +23,6 @@ def getFrequentReason(reason_column):
 			reason_dict[value] += 1
 		else:
 			reason_dict[value] = 1
-	print(reason_dict)
 	return max(reason_dict, key=reason_dict.get)
 
 if __name__ == '__main__':

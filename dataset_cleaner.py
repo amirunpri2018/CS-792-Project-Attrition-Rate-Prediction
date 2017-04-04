@@ -21,11 +21,11 @@ def cleanDatasetWithAttributes(dataset_1, features):
 	'Other Primary Renal Disease', 'Angina?', 'Myocardial Infarct?', 'Coronary Artery Bypass Grafts/Angioplasty?', 'Pulmonary Edema',
 	'Cerebrovascular', 'Peripheral Vas', 'Diabetes Type I', 'Diabetes Type II', 'Malignancy', 'Malignancy Site', 'Other Malignancy Site',
 	'Chronic Obstructive Lung Disease?', 'Other Serious Illness', 'Specified Other Serious Illness', 'Current Smoker', 'Age', 'Sex', 
-	'Dialysis Start Date', 'Treatment Duration', 'Number of Modality Changes', 'Final Modality', 'Reason Code']
+	'Dialysis Start Date', 'Treatment Duration', 'Number of Modality Changes', 'Withdrew', 'Reason Code']
 	for patient in dataset_1:
 		new_patient = []
 		for attr in range(len(patient)):
-			if (attr > 0 and attr < 8) or (attr > 9 and attr < 28) or attr == 30 or (attr > 34 and attr < 38) or attr == 39 or attr == 44:
+			if (attr > 0 and attr < 8) or (attr > 9 and attr < 28) or attr == 30 or (attr > 34 and attr < 39) or attr == 45:
 				attribute = patient[attr].strip().lower()
 				if attr == 35:
 					attribute = attribute.split(' ')[0]
@@ -37,11 +37,11 @@ def cleanDatasetWithAttributes(dataset_1, features):
 
 def cleanDatasetWithoutAttributes(dataset_2, features):
 	new_dataset = []
-	new_features = ['Age', 'Sex', 'Dialysis Start Date', 'Treatment Duration', 'Number of Modality Changes', 'Final Modality', 'Reason Code']
+	new_features = ['Age', 'Sex', 'Dialysis Start Date', 'Treatment Duration', 'Number of Modality Changes', 'Withdrew', 'Reason Code']
 	for patient in dataset_2:
 		new_patient = []
 		for attr in range(len(patient)):
-			if attr == 30 or (attr > 34 and attr < 38) or attr == 39 or attr == 44:
+			if attr == 30 or (attr > 34 and attr < 39) or attr == 45:
 				attribute = patient[attr].strip().lower()
 				if attr == 35:
 					attribute = attribute.split(' ')[0]

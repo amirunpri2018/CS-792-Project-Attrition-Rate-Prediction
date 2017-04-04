@@ -13,7 +13,6 @@ def load(dataset_path):
 
 def split(dataset):
 	dataset_1, dataset_2 = [], []
-	print(dataset[0])
 	for patient in dataset:
 		null_count = 0
 		for attribute in range(2, 28):
