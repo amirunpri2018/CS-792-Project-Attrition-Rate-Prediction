@@ -14,20 +14,18 @@ def load(dataset_path):
 
 def flatten(dataset, features):
 
-    withdrawed = False
+    withdrew = False
     shouldSkipID = None
 
     start_date, duration, modality_changes, new_dataset = dataset[0][35], -1, {}, []
     modality_changes[dataset[0][46]] = 1
-    withdrawed = False
     for patient_i in range(1, len(dataset)):
         if int(dataset[patient_i - 1][0]) == int(dataset[patient_i][0]):
-            if withdrawed:
+            if withdrew:
                 continue
-
             modality_code = dataset[patient_i][44]
             if modality_code == "143":
-                withdrawed = True
+                withdrew = True
                 continue
             else:
                 new_modality = dataset[patient_i][46]
@@ -39,8 +37,6 @@ def flatten(dataset, features):
             end_date = dataset[patient_i - 1][35]
             if start_date != 'NULL' and end_date != 'NULL':
                 duration = getDuration(start_date, end_date)
-                if patient_i < 20:
-                    print(start_date, end_date, duration)
             else:
                 duration = 1
             new_patient = dataset[patient_i - 1][:35]
@@ -57,8 +53,7 @@ def flatten(dataset, features):
             new_modality = dataset[patient_i][46]
             modality_changes = {}
             modality_changes[new_modality] = 1
-            withdrawed = False
-    print(new_dataset[0])
+            withdrew = False
     return new_dataset
 
 def getDuration(start_date, end_date):
@@ -84,7 +79,7 @@ def getDuration(start_date, end_date):
 def write(dataset, features, current_path):
     new_file_path = current_path + 'FlattenedDataset.csv'
     dataset = [features] + dataset
-    with open(new_file_path, 'w') as new_file:
+    with open(new_file_path, 'w', newline='') as new_file:
         writer = csv.writer(new_file, delimiter=',')
         writer.writerows(dataset)
     new_file.close()
@@ -96,10 +91,9 @@ def main(dataset_name):
     dataset, features = load(dataset_path)
     features_1 = features[:36]
     features_2 = features[36:]
-    features = features_1 + ['Duration'] + ['Number of Modality Changes'] + ["Withdrawed"] + features_2
+    features = features_1 + ['Duration'] + ['Number of Modality Changes'] + ["Withdrew"] + features_2
     dataset = flatten(dataset, features)
     write(dataset, features, current_path)
-    print(features)
 
 if __name__ == '__main__':
     main('Templates')
