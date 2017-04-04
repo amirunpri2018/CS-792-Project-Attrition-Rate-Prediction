@@ -26,7 +26,10 @@ def cleanDatasetWithAttributes(dataset_1, features):
 		new_patient = []
 		for attr in range(len(patient)):
 			if (attr > 0 and attr < 8) or (attr > 9 and attr < 28) or attr == 30 or (attr > 34 and attr < 38) or attr == 39 or attr == 44:
-				new_patient.append(patient[attr])
+				attribute = patient[attr].strip().lower()
+				if attr == 35:
+					attribute = attribute.split(' ')[0]
+				new_patient.append(attribute)
 			if attr == 29:
 				new_patient.append(calcAge(int(patient[attr])))
 		new_dataset.append(new_patient)
@@ -39,7 +42,10 @@ def cleanDatasetWithoutAttributes(dataset_2, features):
 		new_patient = []
 		for attr in range(len(patient)):
 			if attr == 30 or (attr > 34 and attr < 38) or attr == 39 or attr == 44:
-				new_patient.append(patient[attr])
+				attribute = patient[attr].strip().lower()
+				if attr == 35:
+					attribute = attribute.split(' ')[0]
+				new_patient.append(attribute)
 			if attr == 29:
 				new_patient.append(calcAge(int(patient[attr])))
 		new_dataset.append(new_patient)
