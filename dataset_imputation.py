@@ -5,16 +5,14 @@ from pandas import read_csv
 import numpy
 import operator
 
-def main(dataset_1_name, dataset_2_name):
+def main(dataset_name):
 	current_path = os.path.dirname(os.path.abspath(__file__)) + '\\'
-	dataset_1_path = current_path + dataset_1_name + '.csv'
-	dataset_2_path = current_path + dataset_2_name + '.csv'
-	dataset_1 = read_csv(dataset_1_path, header = None)
-	dataset_2 = read_csv(dataset_2_path, header = None)
-	dataset_2[[0, 1, 2, 3, 4, 5]] = dataset_2[[0, 1, 2, 3, 4, 5]].replace('null', numpy.NaN)
-	frequent_reason = getFrequentReason(dataset_2[5])
-	dataset_2[5] = dataset_2[5].replace(numpy.NaN, frequent_reason)
-	dataset_2.to_csv('FinalDatasetWithoutAttributes.csv', index=False)
+	dataset_path = current_path + dataset_name + '.csv'
+	dataset = read_csv(dataset_path, header = None)
+	dataset[[0, 1, 2, 3, 4, 5]] = dataset[[0, 1, 2, 3, 4, 5]].replace('null', numpy.NaN)
+	frequent_reason = getFrequentReason(dataset[5])
+	dataset[5] = dataset[5].replace(numpy.NaN, frequent_reason)
+	dataset.to_csv('FinalDatasetWithoutAttributes.csv', index=False)
 
 def getFrequentReason(reason_column):
 	reason_dict = {}
@@ -26,4 +24,4 @@ def getFrequentReason(reason_column):
 	return max(reason_dict, key=reason_dict.get)
 
 if __name__ == '__main__':
-	main('CleanDatasetWithAttributes', 'CleanDatasetWithoutAttributes')
+	main('CleanDatasetWithoutAttributes')
