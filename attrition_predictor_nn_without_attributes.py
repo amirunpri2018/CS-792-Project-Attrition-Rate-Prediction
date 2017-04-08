@@ -7,7 +7,8 @@ from sklearn.model_selection import LeaveOneOut, KFold
 
 
 
-df = pd.read_csv("FinalDatasetWithAttributes.csv")
+df = pd.read_csv("FinalDatasetWithoutAttributes.csv")
+df.Sex = df.Sex.replace("f", 0).replace("m", 1)
 label = df.Withdrew.astype(int)
 features = df.drop("Withdrew", axis=1).drop("Reason Code", axis=1)
 
