@@ -5,6 +5,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn import svm, tree
 from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import ExtraTreesClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.model_selection import LeaveOneOut, KFold
 
 def LearnAndTest(feature_set, label_set, clf, clf_name, dataset_name):
@@ -58,6 +59,15 @@ def main(dataset_name):
     
     tree_clf = tree.DecisionTreeClassifier(max_features=3, max_depth=2)
     LearnAndTest(feature_set, label_set, tree_clf, 'Decision Tree', dataset_name)
+
+    extreme_rand_forest_clf = ExtraTreesClassifier(n_estimators=10, max_depth=None, min_samples_split=2, random_state=0)
+    LearnAndTest(feature_set, label_set, extreme_rand_forest_clf, 'Extremely Random Forest', dataset_name)    
+
+    ada_boost_clf = AdaBoostClassifier(n_estimators = 100)
+    LearnAndTest(feature_set, label_set, ada_boost_clf, 'AdaBoost', dataset_name)
+
+    gradient_boost_clf = GradientBoostingClassifier(n_estimators = 100, learning_rate = 1.0, max_depth = 1, random_state = 0)
+    LearnAndTest(feature_set, label_set, gradient_boost_clf, 'Gradient Boosting', dataset_name)
 
 if __name__ == '__main__':
     main("FinalDatasetWithAttributes.csv")
