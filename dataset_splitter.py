@@ -15,11 +15,14 @@ def split(dataset):
 	dataset_1, dataset_2 = [], []
 	for patient in dataset:
 		null_count = 0
-		for attribute in range(2, 28):
+		for attribute in range(2, 8):
 			attr = patient[attribute].strip().lower()
 			if attr == 'null':
 				null_count += 1
-		if null_count > 20:
+		attr = patient[attribute].strip().lower()
+		if attr == 'null':
+			null_count += 1
+		if null_count > 5:
 			dataset_1.append(patient)
 		else:
 			dataset_2.append(patient)

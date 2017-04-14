@@ -17,32 +17,38 @@ def load(dataset_1_path, dataset_2_path):
 
 def cleanDatasetWithAttributes(dataset_1, features):
 	new_dataset = []
-	new_features = ['Albumin', 'Creatinine', 'Hemoglobin', 'ACR', 'Weight', 'Height', 'Urea', 'Primary Renal Disease', 
-	'Angina?', 'Myocardial Infarct?', 'Coronary Artery Bypass Grafts/Angioplasty?', 'Pulmonary Edema',
-	'Cerebrovascular', 'Peripheral Vas', 'Diabetes Type I', 'Diabetes Type II', 'Malignancy', 'Malignancy Site',
-	'Chronic Obstructive Lung Disease?', 'Other Serious Illness', 'Current Smoker', 'Age', 'Sex', 
-	'Treatment Duration', 'Number of Modality Changes', 'Withdrew', 'Reason Code']
+	new_features = ['Albumin', 'Creatinine', 'Hemoglobin', 'Weight', 'Height', 'Urea', 'Comorbidity', 'Current Smoker', 'Age', 'Sex', 
+	'StartTreatmentModality', 'Treatment Duration', 'Number of Modality Changes', 'Code 12', 'Code 13', 'Code 14', 'Code 23', 'Code 24', 'Code 34', 'Code 45', 'Withdrew', 'Reason Code']
 	for patient in dataset_1:
 		new_patient = []
 		for attr in range(len(patient)):
-			if (attr > 1 and attr < 8) or (attr > 9 and attr < 12) or (attr > 12 and attr < 23) or (attr > 23 and attr < 26) or (attr > 26 and attr < 28) or attr == 30 or (attr > 35 and attr < 39) or attr == 45:
+			if (attr > 1 and attr < 5) or (attr > 5 and attr < 8) or (attr > 9 and attr < 12) or attr == 15 or (attr > 20 and attr < 32) or attr == 38:
 				attribute = patient[attr].strip().lower()
 				new_patient.append(attribute)
-			if attr == 29:
+			if attr == 12:
+				attribute = patient[attr].strip().lower()
+				if len(attribute) == 4 or attribute[0] == 'u':
+					attribute = 'u'
+				elif attribute[0] == 'n':
+					attribute = 'n'
+				else:
+					attribute = 'y' 
+				new_patient.append(attribute)
+			if attr == 14:
 				new_patient.append(calcAge(int(patient[attr])))
 		new_dataset.append(new_patient)
 	return new_dataset, new_features
 
 def cleanDatasetWithoutAttributes(dataset_2, features):
 	new_dataset = []
-	new_features = ['Age', 'Sex', 'Treatment Duration', 'Number of Modality Changes', 'Withdrew', 'Reason Code']
+	new_features = ['Comorbidity', 'Age', 'Sex', 'StartTreatmentModality', 'Treatment Duration', 'Number of Modality Changes', 'Code 12', 'Code 13', 'Code 14', 'Code 23', 'Code 24', 'Code 34', 'Code 45', 'Withdrew', 'Reason Code']
 	for patient in dataset_2:
 		new_patient = []
 		for attr in range(len(patient)):
-			if attr == 30 or (attr > 35 and attr < 39) or attr == 45:
+			if attr == 11 or attr == 15 or (attr > 20 and attr < 32) or attr == 38:
 				attribute = patient[attr].strip().lower()
 				new_patient.append(attribute)
-			if attr == 29:
+			if attr == 14:
 				new_patient.append(calcAge(int(patient[attr])))
 		new_dataset.append(new_patient)
 	return new_dataset, new_features
